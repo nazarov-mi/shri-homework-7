@@ -1,9 +1,9 @@
 {
   "name": "fw",
   "version": "1.0.0",
-  "homepage": "https://github.com/nazarov-mi/shri-homework-7#readme",
+  "homepage": "https://github.com/nazarov-mi/shri-homework-7.1#readme",
   "bugs": {
-    "url": "https://github.com/nazarov-mi/shri-homework-7/issues"
+    "url": "https://github.com/nazarov-mi/shri-homework-7.1/issues"
   },
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nazarov-mi/shri-homework-7.git"
+    "url": "git+https://github.com/nazarov-mi/shri-homework-7.1.git"
   },
   "author": "Nazarov MI (m@nazarov-mi.ru)",
   "license": "ISC",
