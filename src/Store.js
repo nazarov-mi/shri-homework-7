@@ -17,8 +17,9 @@ class Store extends Observer {
 	 * Создаёт экземпляр Store
 	 * @constructs
 	 * @param {Dispatcher} dispatcher - Экземпляр класса Dispatcher
+	 * @param {sny} state - внутреннее состояние хранилища
 	 */
-	constructor (dispatcher) {
+	constructor (dispatcher, state) {
 		super()
 
 		if (this.constructor === Store) {
@@ -26,8 +27,9 @@ class Store extends Observer {
 		}
 
 		this._dispatcher = dispatcher
-		this._state = this.createState()
+		this._state = state
 
+		// Подписываемся на события Dispatcher'а
 		dispatcher.on(payload => this._onDispatch(payload))
 	}
 
@@ -42,16 +44,7 @@ class Store extends Observer {
 	}
 
 	/**
-	 * Создаёт новый экземпляр внутреннего состояния хранилища
-	 * @abstract
-	 * @return {any} Состояние хранилища
-	 */
-	createState () {
-		throw new AbstractMethodError('Store', 'createState')
-	}
-
-	/**
-	 * Мутирует переданное состояние
+	 * Мутирует состояние хранилища
 	 * @abstract
 	 * @param  {any} state - состояние хранилища
 	 * @param  {any} payload - полученные данные

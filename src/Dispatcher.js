@@ -1,8 +1,7 @@
 const Observer = require('./Observer')
 
 /**
- * Наследует класс Observer.
- * Необходим для работы вместе с хранилищем данных Store.
+ * Необходим для работы вместе с хранилищем данных Store, наследует класс Observer
  * @class
  * @extends Observer
  */
@@ -17,8 +16,8 @@ class Dispatcher extends Observer {
 	}
 
 	/**
-	 * Подписывает функцию обратного вызова, если она не была подписана ранее
-	 * @param  {Function} callback - функция обратного вызова
+	 * Рассылает данные между всему функциями обратного вызова
+	 * @param  {any} payload - данные для рассылки
 	 * @return {Dispatcher} Возвращает текущий экземпляр класса
 	 */
 	dispatch (payload) {

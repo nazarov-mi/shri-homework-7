@@ -25,14 +25,20 @@ class Observer {
 	/**
 	 * Подписывает функцию обратного вызова, если она не была подписана ранее
 	 * @param  {Function} callback - функция обратного вызова
+	 * @param  {Boolean} greatPriority - если является true —
+	 * функция обратного вызова добавляется в начало очереди
 	 * @return {Observer} Возвращает текущий экземпляр класса
 	 */
-	on (callback) {
+	on (callback, greatPriority = false) {
 		if (typeof callback === 'function') {
 			const index = this._callbacks.indexOf(callback)
 
 			if (index < 0) {
-				this._callbacks.push(callback)
+				if (greatPriority) {
+					this._callbacks.unshift(callback)
+				} else {
+					this._callbacks.push(callback)
+				}
 			}
 		}
 
