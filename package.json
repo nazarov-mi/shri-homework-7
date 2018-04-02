@@ -7,9 +7,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "docs:build": "jsdoc --configure .jsdoc.json --verbose",
-    "lint": "eslint \"**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "docs:build": "rimraf ./docs && jsdoc --configure .jsdoc.json --verbose",
+    "lint": "eslint \"**/*.js\""
   },
   "husky": {
     "hooks": {
@@ -30,6 +29,7 @@
     "eslint-plugin-import": "^2.10.0",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
-    "minami": "^1.2.3"
+    "minami": "^1.2.3",
+    "rimraf": "^2.6.2"
   }
 }
