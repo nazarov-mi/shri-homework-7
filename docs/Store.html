@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AbstractClassError.html">AbstractClassError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AbstractMethodError.html">AbstractMethodError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Dispatcher.html">Dispatcher</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#dispatch">dispatch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#on">on</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Observer.html">Observer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#on">on</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Store.html">Store</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#createState">createState</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#mutate">mutate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#on">on</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AbstractClassError.html">AbstractClassError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AbstractMethodError.html">AbstractMethodError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Dispatcher.html">Dispatcher</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#dispatch">dispatch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dispatcher.html#on">on</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Observer.html">Observer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Observer.html#on">on</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Store.html">Store</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#fire">fire</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#mutate">mutate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#off">off</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Store.html#on">on</a></span></li>
 </nav>
 
 <div id="main">
@@ -61,7 +61,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Store"><span class="type-signature">(abstract) </span>new Store<span class="signature">(dispatcher)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Store"><span class="type-signature">(abstract) </span>new Store<span class="signature">(dispatcher, state)</span><span class="type-signature"></span></h4>
 
     
 
@@ -171,6 +171,32 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>sny</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>внутреннее состояние хранилища</p>
+                
+            </td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -262,7 +288,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Store.js.html">Store.js</a>, <a href="Store.js.html#line70">line 70</a>
+        <a href="Store.js.html">Store.js</a>, <a href="Store.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -287,114 +313,6 @@
     
         <h3 class="subsection-title">Methods</h3>
 
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="createState"><span class="type-signature">(abstract) </span>createState<span class="signature">()</span><span class="type-signature"> &rarr; {any}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Создаёт новый экземпляр внутреннего состояния хранилища</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Store.js.html">Store.js</a>, <a href="Store.js.html#line49">line 49</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>any</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Состояние хранилища</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
         
             
 <div class="section-method">
@@ -449,7 +367,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line62">line 62</a>
+        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -573,7 +491,7 @@
 
 
 <div class="description">
-    <p>Мутирует переданное состояние</p>
+    <p>Мутирует состояние хранилища</p>
 </div>
 
 
@@ -609,7 +527,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Store.js.html">Store.js</a>, <a href="Store.js.html#line60">line 60</a>
+        <a href="Store.js.html">Store.js</a>, <a href="Store.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -800,7 +718,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line47">line 47</a>
+        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -917,7 +835,7 @@
 
     
 
-    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(callback)</span><span class="type-signature"> &rarr; {<a href="Observer.html">Observer</a>}</span></h4>
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(callback, greatPriority)</span><span class="type-signature"> &rarr; {<a href="Observer.html">Observer</a>}</span></h4>
 
     
 
@@ -965,7 +883,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line30">line 30</a>
+        <a href="Observer.js.html">Observer.js</a>, <a href="Observer.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -999,6 +917,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -1024,9 +944,46 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">
                 <p>функция обратного вызова</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>greatPriority</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Boolean</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>если является true —
+функция обратного вызова добавляется в начало очереди</p>
                 
             </td>
         </tr>
@@ -1094,7 +1051,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 01 2018 00:05:09 GMT+0300 (MSK) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 02 2018 16:46:10 GMT+0300 (MSK) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
