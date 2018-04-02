@@ -70,11 +70,31 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _fw = __webpack_require__(1);
+
+var _fw2 = _interopRequireDefault(_fw);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Возвращаем новый экземпляр класса fw.Dispatcher
+exports.default = new _fw2.default.Dispatcher();
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 module.exports.Dispatcher = __webpack_require__(7);
 module.exports.Store = __webpack_require__(8);
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86,7 +106,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /* Abstract class */
 /* eslint-disable class-methods-use-this, no-unused-vars */
-var AbstractClassError = __webpack_require__(2);
+var AbstractClassError = __webpack_require__(3);
 
 /**
  * Класс реализует шаблон проектирования наблюдатель —
@@ -114,6 +134,8 @@ var Observer = function () {
 	/**
   * Подписывает функцию обратного вызова, если она не была подписана ранее
   * @param  {Function} callback - функция обратного вызова
+  * @param  {Boolean} greatPriority - если является true —
+  * функция обратного вызова добавляется в начало очереди
   * @return {Observer} Возвращает текущий экземпляр класса
   */
 
@@ -121,11 +143,17 @@ var Observer = function () {
 	_createClass(Observer, [{
 		key: 'on',
 		value: function on(callback) {
+			var greatPriority = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
 			if (typeof callback === 'function') {
 				var index = this._callbacks.indexOf(callback);
 
 				if (index < 0) {
-					this._callbacks.push(callback);
+					if (greatPriority) {
+						this._callbacks.unshift(callback);
+					} else {
+						this._callbacks.push(callback);
+					}
 				}
 			}
 
@@ -172,7 +200,7 @@ var Observer = function () {
 module.exports = Observer;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -199,7 +227,7 @@ function AbstractClassError(className) {
 module.exports = AbstractClassError;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -208,29 +236,11 @@ module.exports = AbstractClassError;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+// Типы действий
 exports.default = {
 	ADD_MESSAGE: 'ADD_MESSAGE',
 	CHANGE_DATA: 'CHANGE_DATA'
 };
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _fw = __webpack_require__(0);
-
-var _fw2 = _interopRequireDefault(_fw);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = new _fw2.default.Dispatcher();
 
 /***/ }),
 /* 5 */
@@ -247,6 +257,10 @@ var _Actions = __webpack_require__(10);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
+var _Dispatcher = __webpack_require__(0);
+
+var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
+
 var _sendToServer = __webpack_require__(11);
 
 var _sendToServer2 = _interopRequireDefault(_sendToServer);
@@ -257,6 +271,53 @@ var $ = function $(selector, target) {
 	return (target || document).querySelector(selector);
 };
 
+function initLog() {
+	var $log = $('.log');
+
+	// Функция логирования
+	function log(data) {
+		$log.innerHTML += data;
+	}
+
+	// Логирование Dispatcher'а
+	_Dispatcher2.default.on(function (payload) {
+		var data = JSON.stringify(payload);
+		var html = ['<p><b>В Dispatcher пришёл запрос с данными</b></p>', '<pre>' + data + '</pre>'].join('');
+
+		log(html);
+	}, true);
+
+	// Логирование хранилища
+
+	// Старое состояние
+	var oldState = JSON.stringify(_Store2.default.state);
+
+	_Store2.default.on(function (state) {
+		var newState = JSON.stringify(state);
+		var html = ['<p><b>В хранилище изменились данные</b></p>', '<p>+ Старое состояние</p>', '<pre>' + oldState + '</pre>', '<p>+ Новое состояние</p>', '<pre>' + newState + '</pre>'].join('');
+
+		log(html);
+
+		oldState = newState;
+	});
+}
+
+initLog();
+
+// Функция отправки данных на сервер
+async function send(data) {
+	var message = void 0;
+
+	try {
+		message = await (0, _sendToServer2.default)(data);
+	} catch (e) {
+		message = e.message;
+	}
+
+	_Actions2.default.addMessage(message);
+}
+
+// Инициализация представления
 var $apply = $('.view-stub__apply');
 var $input = $('.view-stub__input');
 var $label = $('.view-stub__label');
@@ -270,15 +331,7 @@ $apply.addEventListener('click', function () {
 	}
 });
 
-async function send(data) {
-	try {
-		var message = await (0, _sendToServer2.default)(data);
-		_Actions2.default.addMessage(message);
-	} catch (e) {
-		_Actions2.default.addMessage(e.message);
-	}
-}
-
+// Установка слушателей на хранилище
 var oldData = _Store2.default.state.data;
 _Store2.default.on(function (state) {
 	if (state.data !== oldData) {
@@ -302,15 +355,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _fw = __webpack_require__(0);
+var _fw = __webpack_require__(1);
 
 var _fw2 = _interopRequireDefault(_fw);
 
-var _ActionTypes = __webpack_require__(3);
+var _ActionTypes = __webpack_require__(4);
 
 var _ActionTypes2 = _interopRequireDefault(_ActionTypes);
 
-var _Dispatcher = __webpack_require__(4);
+var _Dispatcher = __webpack_require__(0);
 
 var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
@@ -322,37 +375,44 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Класс для хранения данных, наследует обстрактный класс fw.Store
+ * @class
+ * @extends fw.Store
+ */
 var Store = function (_fw$Store) {
 	_inherits(Store, _fw$Store);
 
+	/**
+  * Создаёт экземпляр Store
+  * @constructs
+  */
 	function Store() {
 		_classCallCheck(this, Store);
 
-		return _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).call(this, _Dispatcher2.default));
+		return _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).call(this, _Dispatcher2.default, {
+			messages: [],
+			data: ''
+		}));
 	}
 
+	// Переопределяем функцию мутации
+	/**
+  * @inheritDoc
+  */
 	/* eslint-disable-next-line class-methods-use-this */
 
 
 	_createClass(Store, [{
-		key: 'createState',
-		value: function createState() {
-			return {
-				messages: [],
-				data: ''
-			};
-		}
-
-		/* eslint-disable-next-line class-methods-use-this */
-
-	}, {
 		key: 'mutate',
 		value: function mutate(state, payload) {
 			switch (payload.type) {
+				// Добавить сообщение
 				case _ActionTypes2.default.ADD_MESSAGE:
 					state.messages.push(payload.text);
 					break;
 
+				// Изменить данные
 				case _ActionTypes2.default.CHANGE_DATA:
 					state.data = payload.data; // eslint-disable-line no-param-reassign
 					break;
@@ -367,6 +427,9 @@ var Store = function (_fw$Store) {
 
 	return Store;
 }(_fw2.default.Store);
+
+// Возвращаем новый экземпляр хранилища
+
 
 exports.default = new Store();
 
@@ -385,11 +448,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Observer = __webpack_require__(1);
+var Observer = __webpack_require__(2);
 
 /**
- * Наследует класс Observer.
- * Необходим для работы вместе с хранилищем данных Store.
+ * Необходим для работы вместе с хранилищем данных Store, наследует класс Observer
  * @class
  * @extends Observer
  */
@@ -408,8 +470,8 @@ var Dispatcher = function (_Observer) {
 	}
 
 	/**
-  * Подписывает функцию обратного вызова, если она не была подписана ранее
-  * @param  {Function} callback - функция обратного вызова
+  * Рассылает данные между всему функциями обратного вызова
+  * @param  {any} payload - данные для рассылки
   * @return {Dispatcher} Возвращает текущий экземпляр класса
   */
 
@@ -443,8 +505,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /* Abstract class */
 /* eslint-disable class-methods-use-this, no-unused-vars */
-var Observer = __webpack_require__(1);
-var AbstractClassError = __webpack_require__(2);
+var Observer = __webpack_require__(2);
+var AbstractClassError = __webpack_require__(3);
 var AbstractMethodError = __webpack_require__(9);
 
 /**
@@ -462,8 +524,9 @@ var Store = function (_Observer) {
   * Создаёт экземпляр Store
   * @constructs
   * @param {Dispatcher} dispatcher - Экземпляр класса Dispatcher
+  * @param {sny} state - внутреннее состояние хранилища
   */
-	function Store(dispatcher) {
+	function Store(dispatcher, state) {
 		_classCallCheck(this, Store);
 
 		var _this = _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).call(this));
@@ -473,8 +536,9 @@ var Store = function (_Observer) {
 		}
 
 		_this._dispatcher = dispatcher;
-		_this._state = _this.createState();
+		_this._state = state;
 
+		// Подписываемся на события Dispatcher'а
 		dispatcher.on(function (payload) {
 			return _this._onDispatch(payload);
 		});
@@ -496,19 +560,7 @@ var Store = function (_Observer) {
 		}
 
 		/**
-   * Создаёт новый экземпляр внутреннего состояния хранилища
-   * @abstract
-   * @return {any} Состояние хранилища
-   */
-
-	}, {
-		key: 'createState',
-		value: function createState() {
-			throw new AbstractMethodError('Store', 'createState');
-		}
-
-		/**
-   * Мутирует переданное состояние
+   * Мутирует состояние хранилища
    * @abstract
    * @param  {any} state - состояние хранилища
    * @param  {any} payload - полученные данные
@@ -577,23 +629,28 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _ActionTypes = __webpack_require__(3);
+var _ActionTypes = __webpack_require__(4);
 
 var _ActionTypes2 = _interopRequireDefault(_ActionTypes);
 
-var _Dispatcher = __webpack_require__(4);
+var _Dispatcher = __webpack_require__(0);
 
 var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Действия, которые может совершить пользователь
 exports.default = {
+	// Добавить сообщение
 	addMessage: function addMessage(text) {
 		_Dispatcher2.default.dispatch({
 			text: text,
 			type: _ActionTypes2.default.ADD_MESSAGE
 		});
 	},
+
+
+	// Изменить данные
 	changeData: function changeData(data) {
 		_Dispatcher2.default.dispatch({
 			data: data,
@@ -613,6 +670,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+// Отправка данных на сервер
 exports.default = function (data) {
 	return new Promise(function (resolve, reject) {
 		setTimeout(function () {

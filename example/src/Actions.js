@@ -1,7 +1,9 @@
 import ActionTypes from './ActionTypes'
 import Dispatcher from './Dispatcher'
 
+// Действия, которые может совершить пользователь
 export default {
+	// Добавить сообщение
 	addMessage (text) {
 		Dispatcher.dispatch({
 			text,
@@ -9,6 +11,7 @@ export default {
 		})
 	},
 
+	// Изменить данные
 	changeData (data) {
 		Dispatcher.dispatch({
 			data,
